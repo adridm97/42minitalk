@@ -15,9 +15,9 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <signals.h>
+# include <signal.h>
 # include <sys/types.h>
+# include "./libft/libft.h"
 
-void	ft_putnbr_fd(int n, int fd);
 
 #endif
