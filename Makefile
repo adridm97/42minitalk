@@ -3,46 +3,67 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aduenas- <aduenas-@student.42barcel>       +#+  +:+       +#+         #
+#    By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/10/16 22:02:33 by aduenas-          #+#    #+#              #
-#    Updated: 2023/10/16 22:28:05 by aduenas-         ###   ########.fr        #
+#    Created: 2023/05/03 22:21:03 by aduenas-          #+#    #+#              #
+#    Updated: 2023/06/10 16:32:09 by aduenas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
-CFLAGS = -Wextra -Werror -Wall
-RM = rm -f
+NAME	= libft.a
+CFLAGS	= -Wall -Wextra -Werror -I.
+LIB = libft.h
+SRC		= 	ft_isalpha.c	\
+			ft_isdigit.c	\
+			ft_isalnum.c	\
+			ft_isascii.c	\
+			ft_isprint.c	\
+			ft_strlen.c	\
+			ft_memset.c	\
+			ft_bzero.c	\
+			ft_memcpy.c	\
+			ft_memmove.c	\
+			ft_strlcpy.c	\
+			ft_strlcat.c	\
+			ft_toupper.c	\
+			ft_tolower.c	\
+			ft_strchr.c	\
+			ft_strrchr.c	\
+			ft_strncmp.c	\
+			ft_memchr.c	\
+			ft_memcmp.c	\
+			ft_strnstr.c	\
+			ft_atoi.c		\
+			ft_calloc.c	\
+			ft_strdup.c	\
+			ft_substr.c	\
+			ft_strjoin.c	\
+			ft_strtrim.c	\
+			ft_split.c	\
+			ft_itoa.c		\
+			ft_strmapi.c	\
+			ft_striteri.c	\
+			ft_putchar_fd.c	\
+			ft_putstr_fd.c	\
+			ft_putendl_fd.c	\
+			ft_putnbr_fd.c
 
-LIBFT = libft/libft.a
+OBJ	= $(SRC:%.c=%.o)
 
-NAME_SERVER = server
-SERVER_SRC = server.c
-SERVER_OBJ = ${SERVER_SRC:.c=.o}
+all: $(NAME)
 
-NAME_CLIENT = client
-CLIENT_SRC = client.c
-CLIENT_OBJ = ${CLIENT_SRC:.c=.o}
+$(NAME): $(OBJ) $(LIB)
+	ar rcs $(NAME) $(OBJ)
 
-all: ${NAME_SERVER} ${NAME_CLIENT}
-
-${LIBFT}:
-		${MAKE} -C libft
-
-${NAME_CLIENT}: ${CLIENT_OBJ} ${LIBFT}
-		${CC} ${CFLAGS} ${CLIENT_OBJ} ${LIBFT} -o ${NAME_CLIENT}
-
-${NAME_SERVER}: ${SERVER_OBJ} ${LIBFT}
-		${CC} ${CFLAGS} ${SERVER_OBJ} ${LIBFT} -o ${NAME_SERVER}
+%.o: %.c $(LIB)
+	cc $(CFLAGS) -c $< -o $@ 
 
 clean:
-		${MAKE} clean -C ./libft
-		${RM} ${CLIENT_OBJ} ${SERVER_OBJ}
+	rm -f $(OBJ)
 
 fclean: clean
-		${MAKE} fclean -C ./libft
-		${RM} ${NAME_SERVER} ${NAME_CLIENT}
+	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: clean fclean re
